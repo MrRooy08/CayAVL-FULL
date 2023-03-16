@@ -1,2 +1,3 @@
 ﻿  Source.cpp
+D:\Source\CayAVL\CayAVL\Source.cpp(482): warning C4715: 'findNode': not all control paths return a value
   CayAVL.vcxproj -> D:\Source\CayAVL\x64\Debug\CayAVL.exe

@@ -481,6 +481,114 @@ Node* findNode(Node* node, int x)
 
 }
 
+
+// Đếm nút lẻ trên cây AVL
+int countOddTree(Node* node)
+{
+	if (node != NULL)
+	{
+		int a = countOddTree(node->left);
+		int b = countOddTree(node->right);
+		if (node->data % 2 == 1)
+			return 1 + a + b;
+		return a + b;
+	}
+	return 0;
+}
+
+void printOddTree(Node* node)
+{
+	if (node != NULL)
+	{
+		if (node->data % 2 == 1)
+		{
+			cout << " " << node->data;
+		}
+		printOddTree(node->left);
+		printOddTree(node->right);
+	}
+}
+
+
+int checkSnt(int n)
+{
+	if (n < 2) return 0;
+
+	for (int i = 2; i < n; i++)
+	{
+		if (n % i == 0)
+			return 0;
+	}
+	return 1;
+}
+
+void printPrimeNumber(Node* node)
+{
+	if (node != NULL)
+	{
+		if (checkSnt(node->data))
+		{
+			cout << " " << node->data;
+		}
+		printPrimeNumber(node->left);
+		printPrimeNumber(node->right);
+	}
+}
+
+//int sumPrimeNumBer(Node* node)
+//{
+//	if (node != NULL)
+//	{
+//		int a = sumPrimeNumBer(node->left);
+//		int b = sumPrimeNumBer(node->right);
+//		if (checkSnt(node->data))
+//		{
+//			return 1 + a + b;
+//		}
+//		return a + b;
+//	}
+//	return 0;
+//}
+
+int sumPrimeNumBer(Node* node)
+{
+	if (node != NULL)
+	{
+		int a = sumPrimeNumBer(node->left);
+		int b = sumPrimeNumBer(node->right);
+		if (checkSnt(node->data))
+			return node->data + a + b;
+		return a + b;
+	}
+	return 0;
+}
+
+int sumOfPrimes(Node* root) {
+	if (root == NULL) {
+		return 0;
+	}
+	int sum = 0;
+	if (checkSnt(root->data)) {
+		sum += root->data;
+	}
+	sum += sumOfPrimes(root->left);
+	sum += sumOfPrimes(root->right);
+	return sum;
+}
+
+void printMultipleX(Node* node, int x) // In Bội Số Của X
+{
+	if (node != NULL)
+	{
+		if (node->data % x == 0)
+		{
+			cout << " " << node->data;
+		}
+		printMultipleX(node->left, x);
+		printMultipleX(node->right, x);
+	}
+}
+
 void displayMenu()
 {
 	cout << "\n\n\t\t============================= " << endl;
@@ -488,6 +596,11 @@ void displayMenu()
 	cout << "\n\n\t\t2. Xuat Node. ";
 	cout << "\n\n\t\t3. Xoa Node.";
 	cout << "\n\n\t\t4. Tim Node.";
+	cout << "\n\n\t\t5. Xuat Nut Le Trong Cay. ";
+	cout << "\n\n\t\t6. Dem Nut Le Trong Cay. ";
+	cout << "\n\n\t\t7. Print Prime NumBer In Trees. ";
+	cout << "\n\n\t\t8. Sum Prime NumBer In Trees. ";
+	cout << "\n\n\t\t9. Print Multiple OF X. ";
 	cout << "\n\n\t\t============================= " << endl;
 }
 
@@ -512,9 +625,15 @@ int main()
 			system("cls");
 			preOrder(node);
 			break;
-		case 4:
+		case 3:
 			system("cls");
 			int x;
+			cout << "\n Nhap Gia Tri X Can Xoa: "; cin >> x;
+			deleteNode(node, x);
+			cout << "\n Gia Tri Cay Sau Khi Xoa "; preOrder(node);
+			break;
+		case 4:
+			system("cls");
 			cout << "\n Nhap Gia Tri X Can Tim: "; cin >> x;
 			Node* gtri;
 			gtri = findNode(node, x);
@@ -523,6 +642,32 @@ int main()
 				cout << "\n Khong Tim Thay Gia Tri ";
 			}
 			else cout << "\n Tim Thay Gia Tri " << gtri->data << " Trong Cay ";
+			break;
+		case 5:
+			system("cls");
+			cout << "\n Cac Nut Le Trong Cay La: ";
+			printOddTree(node);
+			break;
+		case 6:
+			system("cls");
+			int kq;
+			kq = countOddTree(node);
+			cout << "\n Dem Nut Le: " << kq << endl;
+			break;
+		case 7:
+			system("cls");
+			cout << "\n Print Prime NumBer: ";
+			printPrimeNumber(node);
+			break;
+		case 8:
+			system("cls");
+			kq = sumPrimeNumBer(node);
+			cout << "\n Sum Prime NumBer: " << kq;
+			break;
+		case 9:
+			system("cls");
+			cout << "\n Nhap Gia Tri Boi X: "; cin >> x;
+			printMultipleX(node, x);
 			break;
 		case 0:
 			isRunning = false;
